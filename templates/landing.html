@@ -24,7 +24,7 @@
         </p>
         <div class="hero-actions">
             <a href="{{ url_for('register') }}" class="hero-btn">Create free account</a>
-            <a href="#features" class="hero-btn">See how it works</a>
+            <button type="button" class="hero-btn" id="how-it-works-open">See how it works</button>
         </div>
         <div class="hero-preview">
             <div class="preview-dots">
@@ -101,4 +101,56 @@
     </div>
 </section>
 
+<div class="video-modal" id="video-modal" hidden>
+    <div class="video-modal-dialog" role="dialog" aria-modal="true" aria-label="How Spendly works">
+        <button type="button" class="video-modal-close" id="video-modal-close" aria-label="Close video">&times;</button>
+        <div class="video-modal-frame">
+            <iframe
+                id="video-modal-iframe"
+                data-src="https://www.youtube.com/embed/jNQXAC9IVRw?autoplay=1&rel=0"
+                title="How Spendly works"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    (function () {
+        var modal = document.getElementById('video-modal');
+        var iframe = document.getElementById('video-modal-iframe');
+        var openBtn = document.getElementById('how-it-works-open');
+        var closeBtn = document.getElementById('video-modal-close');
+
+        function openModal() {
+            iframe.src = iframe.dataset.src;
+            modal.hidden = false;
+            document.body.classList.add('video-modal-open');
+            closeBtn.focus();
+        }
+
+        function closeModal() {
+            modal.hidden = true;
+            // Dropping the src unloads the player, so playback stops.
+            iframe.removeAttribute('src');
+            document.body.classList.remove('video-modal-open');
+            openBtn.focus();
+        }
+
+        openBtn.addEventListener('click', openModal);
+        closeBtn.addEventListener('click', closeModal);
+
+        // Only a click on the overlay itself, not on the dialog inside it.
+        modal.addEventListener('click', function (event) {
+            if (event.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && !modal.hidden) closeModal();
+        });
+    })();
+</script>
 {% endblock %}
