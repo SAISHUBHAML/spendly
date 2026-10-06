@@ -525,6 +525,13 @@ a { color: inherit; text-decoration: none; }
 
 .legal-inner li { margin-bottom: 0.4rem; }
 
+.legal-inner a {
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.legal-inner a:hover { text-decoration: underline; }
+
 /* ------------------------------------------------------------------ */
 /* Footer                                                              */
 /* ------------------------------------------------------------------ */
